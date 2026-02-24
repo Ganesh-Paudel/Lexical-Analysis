@@ -13,15 +13,8 @@ Variable names should be valid. currently checks only for beginning with a numbe
 
 This program currently just takes the following examples of inputs.
 
-```bash
 ```java
 result = total - 1000;
 total = result - (1000 - 837483) * 120938 / 120938;
 ```
-``` 
-```
-```
 
-```
-```
-```
