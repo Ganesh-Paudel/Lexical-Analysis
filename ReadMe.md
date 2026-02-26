@@ -16,5 +16,7 @@ This program currently just takes the following examples of inputs.
 ```java
 result = total - 1000;
 total = result - (1000 - 837483) * 120938 / 120938;
+1result = total -1000;
+total = 10000000000000000000000000000000;
 ```
 
