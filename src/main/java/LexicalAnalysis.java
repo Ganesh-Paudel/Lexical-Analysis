@@ -111,38 +111,15 @@ public class LexicalAnalysis {
             case 0:
                 addChar();
                 getChar();
-                while (charClass == classes.LETTER.getValue() || charClass == classes.DIGIT.getValue()) {
-                    addChar();
-                    getChar();
-                }
+                getLexemeWithLetterAndDigits();
                 setTokenAndName(tokens.IDENT);
                 break;
             case 9:
                 addChar();
                 getChar();
-                while ((charClass == classes.DIGIT.getValue() || charClass == classes.LETTER.getValue())) {
-                    addChar();
-                    getChar();
-                }
-//                System.out.println("Here after the loop");
-                StringBuilder sb = new StringBuilder(lexeme.size());
-                for (Character c : lexeme) {
-                    sb.append(c);
-                }
-                String result = sb.toString();
-//                System.out.println(result);
+                getLexemeWithLetterAndDigits();
 
-                if(result.matches(".*[a-zA-Z].*")){
-                    setTokenAndName(tokens.IDENT);
-                    System.out.println("Error: Invalid Variable Name");
-                    break;
-                }else if(!is32Bit(result)){
-                    setTokenAndName(tokens.INT_LIT);
-                    System.out.println("Error: Not an 32 bit integer.");
-                    break;
-                }
-
-                setTokenAndName(tokens.INT_LIT);
+                isItNumberOrName(lexemeToString());
                 break;
             case 99:
                 lookUp(nextChar);
@@ -162,7 +139,7 @@ public class LexicalAnalysis {
         return nextToken;
     }
 
-    private int lookUp(char nextChar) {
+    private int lookUp(char nextChar) throws IOException {
         switch (nextChar) {
             case '(':
                 addChar();
@@ -178,7 +155,14 @@ public class LexicalAnalysis {
                 break;
             case '-':
                 addChar();
-                setTokenAndName(tokens.SUB_OP);
+                getChar();
+                
+                if(charClass == classes.DIGIT.getValue()){
+                    getLexemeWithLetterAndDigits();
+                    isItNumberOrName(lexemeToString());
+                } else{
+                    setTokenAndName(tokens.SUB_OP);
+                }
                 break;
             case '*':
                 addChar();
@@ -204,6 +188,12 @@ public class LexicalAnalysis {
         return nextToken;
     }
 
+    private String lexemeToString() {
+        StringBuilder sb = new StringBuilder(lexeme.size());
+        for (Character c : lexeme) sb.append(c);
+        return sb.toString();
+    }
+
     private void setTokenAndName(tokens clazz){
 
         nextToken = clazz.getValue();
@@ -221,6 +211,34 @@ public class LexicalAnalysis {
 
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    private void isItNumberOrName(String lexeme){
+        boolean hasLetter = false;
+
+        for(char c: lexeme.toCharArray()){
+            if(Character.isLetter(c)){
+                hasLetter = true;
+                break;
+            }
+        }
+
+        if(hasLetter){
+            setTokenAndName(tokens.IDENT);
+            System.out.println("Error: Invalid variableName (Cannot start with a number) ");
+        } else {
+            if(!is32Bit(lexeme)){
+                System.out.println("Error: Not a 32 bit integer.");
+            }
+            setTokenAndName(tokens.INT_LIT);
+        }
+    }
+
+    private void getLexemeWithLetterAndDigits() throws IOException {
+        while(charClass == classes.DIGIT.getValue() || charClass == classes.LETTER.getValue()){
+            addChar();
+            getChar();
         }
     }
 }
