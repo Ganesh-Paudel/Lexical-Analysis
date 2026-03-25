@@ -22,8 +22,24 @@ public class Helpers {
         return false;
     }
 
+    public static boolean checkForNegative(String lexeme) {
+        return lexeme.charAt(0) == '-';
+    }
 
-    public static Tokens isInteger(String lexeme) {
+
+    public static String getSubString(String lexeme, int offset) {
+        StringBuilder ss = new StringBuilder();
+        if(lexeme.length() < offset + 1){
+            return lexeme;
+        }
+        for(int i = offset; i < lexeme.length(); i++){
+            ss.append(lexeme.charAt(i));
+        }
+        return ss.toString();
+    }
+
+
+    public static Tokens isInteger(String lexeme, boolean negative) {
         System.out.println(lexeme);
         System.out.println("Length of int: "+ lexeme.length());
         if(lexeme.length() > 10){
@@ -31,8 +47,23 @@ public class Helpers {
         } else if(lexeme.length() < 10){
             return Tokens.INT;
         } else {
-            return Tokens.INT;
+            if(negative){
+                String maxValue = ""+Integer.MIN_VALUE;
+                return compareNumber(lexeme, maxValue);
+            } else{
+                String maxValue = ""+Integer.MAX_VALUE;
+                return compareNumber(lexeme, maxValue);
+            }
         }
+    }
+
+    private static Tokens compareNumber(String number, String maxValue){
+        for(int i = 0; i < number.length(); i++){
+            if(number.charAt(i) > maxValue.charAt(i)){
+                return Tokens.INVALID_INT;
+            }
+        }
+        return Tokens.INT;
     }
 
 

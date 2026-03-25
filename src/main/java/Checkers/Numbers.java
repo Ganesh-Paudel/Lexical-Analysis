@@ -27,30 +27,15 @@ public class Numbers extends Checker{
         if(Helpers.isFloat(lexeme)){
             return Tokens.FLOAT;
         }
-        boolean isNegative = checkForNegative(lexeme);
+        boolean isNegative = Helpers.checkForNegative(lexeme);
         return check32BitInteger(lexeme, isNegative);
-    }
-
-    private boolean checkForNegative(String lexeme) {
-        return lexeme.charAt(0) == '-';
     }
 
     private Tokens check32BitInteger(String lexeme, boolean isNegative) {
         if(isNegative){
-            lexeme = getSubString(lexeme, 1);
+            lexeme = Helpers.getSubString(lexeme, 1);
         }
-        return Helpers.isInteger(lexeme);
-    }
-
-    private String getSubString(String lexeme, int offset) {
-        StringBuilder ss = new StringBuilder();
-        if(lexeme.length() < offset + 1){
-            return lexeme;
-        }
-        for(int i = offset; i < lexeme.length(); i++){
-            ss.append(lexeme.charAt(i));
-        }
-        return ss.toString();
+        return Helpers.isInteger(lexeme, isNegative);
     }
 
 
