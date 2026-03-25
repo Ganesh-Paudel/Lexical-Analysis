@@ -3,6 +3,7 @@ package Checkers;
 import Core.CharacterExtractor;
 import Token.Tokens;
 import Utils.Conditions;
+import Utils.Helpers;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Numbers extends Checker{
     }
 
     private Tokens classifyTokens(String lexeme) {
-        if(isFloat(lexeme)){
+        if(Helpers.isFloat(lexeme)){
             return Tokens.FLOAT;
         }
         boolean isNegative = checkForNegative(lexeme);
@@ -38,7 +39,7 @@ public class Numbers extends Checker{
         if(isNegative){
             lexeme = getSubString(lexeme, 1);
         }
-        return isInteger(lexeme);
+        return Helpers.isInteger(lexeme);
     }
 
     private String getSubString(String lexeme, int offset) {
@@ -52,23 +53,6 @@ public class Numbers extends Checker{
         return ss.toString();
     }
 
-    private Tokens isInteger(String lexeme) {
-        System.out.println(lexeme);
-        System.out.println("Length of int: "+ lexeme.length());
-        if(lexeme.length() > 10){
-            return Tokens.INVALID_INT;
-        }
-        return Tokens.INT;
-    }
-
-    private boolean isFloat(String lexeme) {
-        for(int i = 0; i < lexeme.length(); i++){
-            if(lexeme.charAt(i) == '.'){
-                return true;
-            }
-        }
-        return false;
-    }
 
     private String getLexeme(char currentCharacter) throws IOException{
         ArrayList<Character> lexemeList = new ArrayList<>();
