@@ -1,1 +1,1 @@
-result = name * 100 if ;
+result = name * 10000000000000000000000 100.87 if ;

@@ -27,6 +27,7 @@ public class Lexer {
         lexemeList = new ArrayList<>();
         reader = new CharacterExtractor(file);
         ident = new Identifier(reader);
+        numbers = new Numbers(reader);
         run();
     }
 
@@ -34,7 +35,6 @@ public class Lexer {
         getCharacter();
         do{
             classify();
-            System.out.println(nextChar);
         } while(this.nextToken != Tokens.EOF);
     }
 
@@ -64,11 +64,13 @@ public class Lexer {
 
     private void classifyLetter() throws IOException{
         this.nextToken = ident.check(this.nextChar);
-        System.out.println(this.nextToken.getValue());
+        System.out.println(this.nextToken.getName());
         getCharacter();
     }
 
     private void classifyDigits() throws IOException{
+        this.nextToken = numbers.check(this.nextChar);
+        System.out.println(this.nextToken.getName());
         getCharacter();
     }
 

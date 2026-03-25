@@ -6,8 +6,11 @@ import Token.Tokens;
 import Utils.Conditions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+
+import static Utils.Helpers.getString;
 
 public class Identifier extends Checker{
 
@@ -21,14 +24,13 @@ public class Identifier extends Checker{
 
     public Tokens check(char nextCharacter) throws IOException {
         String lexeme = getLexeme(nextCharacter);
-        System.out.println("Lexeme: " + lexeme);
         return checkForKeyWords(lexeme);
     }
 
 
     private String getLexeme(char currentCharacter) throws IOException {
-        StringBuilder ss = new StringBuilder();
-        ss.append(currentCharacter);
+        ArrayList<Character> lexemeList = new ArrayList<>();
+        lexemeList.add(currentCharacter);
         while(true){
             int nextCharacter = reader.peek();
             if(nextCharacter == -1){
@@ -39,10 +41,10 @@ public class Identifier extends Checker{
             if(!(Conditions.isLetter(nextChar) || Conditions.isDigit(nextChar) || nextChar == '_')) {
                 break;
             }
-            ss.append((char) reader.getNextCharacter());
+            lexemeList.add((char) reader.getNextCharacter());
 
         }
-       return ss.toString();
+        return getString(lexemeList);
     }
 
     private Tokens checkForKeyWords(String lexeme) throws IOException{
