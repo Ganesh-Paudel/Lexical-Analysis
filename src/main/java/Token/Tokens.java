@@ -15,7 +15,8 @@ public enum Tokens {
     SEMICOLON(30),
     SINGLE_QUOTE(31),
     DOUBLE_QUOTE(32),
-    STRING(33);
+    STRING(33),
+    EOF(-1);
 
     private final int value;
     Tokens(int value){

@@ -5,10 +5,8 @@ import Core.CharacterExtractor;
 abstract class Checker {
 
     protected CharacterExtractor reader;
-    protected char currentCharacter;
 
-    public Checker(CharacterExtractor reader, char  currentCharacter){
+    public Checker(CharacterExtractor reader){
         this.reader=reader;
-        this.currentCharacter = currentCharacter;
     }
 }

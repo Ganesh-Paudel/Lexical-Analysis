@@ -1,6 +1,7 @@
 package Checkers;
 
 import Core.CharacterExtractor;
+import Core.Lexer;
 import Token.Tokens;
 import Utils.Conditions;
 
@@ -14,25 +15,34 @@ public class Identifier extends Checker{
             "if", "else", "for", "int", "float", "double", "do", "while", "String", "char"
     ));
 
-    public Identifier(CharacterExtractor reader, char currentCharacter) throws IOException{
-        super(reader, currentCharacter);
+    public Identifier(CharacterExtractor reader) throws IOException{
+        super(reader);
     }
 
-    public Tokens check() throws IOException {
-        String lexeme = getLexeme();
+    public Tokens check(char nextCharacter) throws IOException {
+        String lexeme = getLexeme(nextCharacter);
+        System.out.println("Lexeme: " + lexeme);
         return checkForKeyWords(lexeme);
     }
 
 
-    private String getLexeme() throws IOException {
+    private String getLexeme(char currentCharacter) throws IOException {
         StringBuilder ss = new StringBuilder();
         ss.append(currentCharacter);
-        currentCharacter = (char) reader.peek();
-        while(Conditions.isLetter(currentCharacter) || Conditions.isDigit(currentCharacter) || currentCharacter == '_'
-    ){
+        while(true){
+            int nextCharacter = reader.peek();
+            if(nextCharacter == -1){
+                break;
+            }
+            char nextChar = (char) nextCharacter;
+
+            if(!(Conditions.isLetter(nextChar) || Conditions.isDigit(nextChar) || nextChar == '_')) {
+                break;
+            }
             ss.append((char) reader.getNextCharacter());
+
         }
-        return ss.toString();
+       return ss.toString();
     }
 
     private Tokens checkForKeyWords(String lexeme) throws IOException{

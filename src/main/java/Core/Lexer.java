@@ -4,6 +4,7 @@ import Checkers.Identifier;
 import Checkers.Numbers;
 import Checkers.SingleOperators;
 import Token.Classes;
+import Token.Tokens;
 import Utils.Conditions;
 
 import java.io.File;
@@ -20,11 +21,12 @@ public class Lexer {
     private CharacterExtractor reader;
     private char nextChar;
     private Classes charClass;
-    private Classes nextToken;
+    private Tokens nextToken;
 
     public Lexer(File file) throws IOException {
         lexemeList = new ArrayList<>();
         reader = new CharacterExtractor(file);
+        ident = new Identifier(reader);
         run();
     }
 
@@ -32,7 +34,8 @@ public class Lexer {
         getCharacter();
         do{
             classify();
-        } while(this.nextToken != Classes.EOF);
+            System.out.println(nextChar);
+        } while(this.nextToken != Tokens.EOF);
     }
 
 
@@ -50,7 +53,7 @@ public class Lexer {
                 classifyUnknown();
             }
             case Classes.EOF-> {
-                this.nextToken = Classes.EOF;
+                this.nextToken = Tokens.EOF;
                 lexemeList.add('E');
                 lexemeList.add('O');
                 lexemeList.add('F');
@@ -60,15 +63,17 @@ public class Lexer {
     }
 
     private void classifyLetter() throws IOException{
-
+        this.nextToken = ident.check(this.nextChar);
+        System.out.println(this.nextToken.getValue());
+        getCharacter();
     }
 
     private void classifyDigits() throws IOException{
-
+        getCharacter();
     }
 
     private void classifyUnknown() throws IOException{
-
+        getCharacter();
     }
 
     private void getRidOfSpaces() throws IOException {
@@ -93,7 +98,7 @@ public class Lexer {
                 this.charClass = Classes.UNKNOWN;
             }
         } else {
-            charClass = Classes.UNKNOWN;
+            charClass = Classes.EOF;
         }
     }
 
