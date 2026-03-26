@@ -15,5 +15,9 @@ public class Conditions {
     public static boolean isWhiteSpace(char ch){
         return ch == ' ';
     }
+    
+    public static boolean isQuote(char ch){
+      return (ch == '"' || ch == '\'');
+    }
 
 }

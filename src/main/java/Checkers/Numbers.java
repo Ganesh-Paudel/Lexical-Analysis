@@ -14,12 +14,10 @@ public class Numbers extends Checker{
 
     public Numbers(CharacterExtractor reader){
         super(reader);
-
     }
 
     public Tokens check(char currentCharacter) throws IOException {
         String lexeme = getLexeme(currentCharacter);
-        System.out.println("AFte lexeme: "+ lexeme);
         return classifyTokens(lexeme);
     }
 
@@ -28,6 +26,9 @@ public class Numbers extends Checker{
             return Tokens.FLOAT;
         }
         boolean isNegative = Helpers.checkForNegative(lexeme);
+        if(isNegative && lexeme.length() == 1){ 
+          return Tokens.SUB_OP; 
+    }
         return check32BitInteger(lexeme, isNegative);
     }
 
@@ -47,7 +48,6 @@ public class Numbers extends Checker{
         int decimalDigits = 0;
 
         if(currentCharacter == '-'){
-            lexemeList.add(currentCharacter);
             int next = reader.peek();
             if(!Conditions.isDigit((char) next)){
                 return getString(lexemeList);

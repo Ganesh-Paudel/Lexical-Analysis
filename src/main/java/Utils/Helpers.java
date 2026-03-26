@@ -23,7 +23,8 @@ public class Helpers {
     }
 
     public static boolean checkForNegative(String lexeme) {
-        return lexeme.charAt(0) == '-';
+       if (lexeme.length() >= 1) return lexeme.charAt(0) == '-';
+        return false;
     }
 
 
@@ -40,8 +41,6 @@ public class Helpers {
 
 
     public static Tokens isInteger(String lexeme, boolean negative) {
-        System.out.println(lexeme);
-        System.out.println("Length of int: "+ lexeme.length());
         if(lexeme.length() > 10){
             return Tokens.INVALID_INT;
         } else if(lexeme.length() < 10){

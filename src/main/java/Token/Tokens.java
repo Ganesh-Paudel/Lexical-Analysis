@@ -17,6 +17,7 @@ public enum Tokens {
     SINGLE_QUOTE(31, "'"),
     DOUBLE_QUOTE(32, " \" "),
     STRING(33, "String"),
+    INV_STRING(34, "Invalid String (Unclosed)"),
     EOF(-1, "EOF");
 
     private final int value;
