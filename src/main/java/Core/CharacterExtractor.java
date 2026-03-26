@@ -9,9 +9,7 @@ public class CharacterExtractor {
     private int bufferedCharacter;
     private boolean hasBuffer;
 
-
-
-    public CharacterExtractor(File file) throws  IOException{
+    public CharacterExtractor(File file) throws IOException {
         this.file = file;
         openFile(this.file);
     }
@@ -24,16 +22,16 @@ public class CharacterExtractor {
         reader.close();
     }
 
-    public int getNextCharacter() throws IOException{
-        if (hasBuffer){
+    public int getNextCharacter() throws IOException {
+        if (hasBuffer) {
             hasBuffer = false;
             return bufferedCharacter;
         }
         return this.reader.read();
     }
 
-    public int peek() throws IOException{
-        if(!hasBuffer){
+    public int peek() throws IOException {
+        if (!hasBuffer) {
             bufferedCharacter = this.reader.read();
             hasBuffer = true;
         }

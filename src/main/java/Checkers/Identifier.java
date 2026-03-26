@@ -1,8 +1,9 @@
 package Checkers;
 
+import Utils.LexemeData;
 import Core.CharacterExtractor;
-import Core.Lexer;
 import Token.Tokens;
+import Utils.Helpers;
 import Utils.Conditions;
 
 import java.io.IOException;
@@ -22,9 +23,10 @@ public class Identifier extends Checker{
         super(reader);
     }
 
-    public Tokens check(char nextCharacter) throws IOException {
+    public LexemeData check(char nextCharacter) throws IOException {
         String lexeme = getLexeme(nextCharacter);
-        return checkForKeyWords(lexeme);
+        Tokens token = checkForKeyWords(lexeme);
+        return new LexemeData(lexeme, token);
     }
 
 

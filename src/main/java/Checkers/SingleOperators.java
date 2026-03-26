@@ -2,30 +2,54 @@ package Checkers;
 
 import Core.CharacterExtractor;
 import Token.Tokens;
+import Utils.LexemeData;
 
-public class SingleOperators extends Checker{
+public class SingleOperators extends Checker {
 
-  public SingleOperators(CharacterExtractor reader){
-    super(reader);
-  }
-
-  public Tokens check(char currentCharacter){
-
-    switch(currentCharacter){
-      case '(' -> {return Tokens.LEFT_PAREN;}
-      case ')' -> {return Tokens.RIGHT_PAREN;}
-      case '+' -> {return Tokens.ADD_OP;}
-      case '-' -> {return Tokens.SUB_OP;}
-      case '*' -> {return Tokens.MULT_OP;}
-      case '/' -> {return Tokens.DIV_OP;}
-      case ';' -> {return Tokens.SEMICOLON;}
-      case '=' -> {return Tokens.ASSIGN_OP;}
-      case '"' -> {return Tokens.DOUBLE_QUOTE;}
-      case '\'' -> {return Tokens.SINGLE_QUOTE;} 
-      default -> {return Tokens.EOF;}
-
+    public SingleOperators(CharacterExtractor reader) {
+        super(reader);
     }
 
-  }
+    public LexemeData check(char currentCharacter) {
+
+        switch (currentCharacter) {
+            case '(' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.RIGHT_PAREN);
+            }
+            case ')' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.LEFT_PAREN);
+            }
+            case '+' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.ADD_OP);
+            }
+            case '-' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.SUB_OP);
+            }
+            case '*' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.MULT_OP);
+            }
+            case '/' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.DIV_OP);
+            }
+            case ';' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.SEMICOLON);
+            }
+            case '=' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.ASSIGN_OP);
+            }
+            case '"' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.DOUBLE_QUOTE);
+            }
+            case '\'' -> {
+                return new LexemeData(String.valueOf(currentCharacter), Tokens.SINGLE_QUOTE);
+            }
+            default -> {
+                System.out.println("Assigning EOF character " + String.valueOf(currentCharacter));
+                return new LexemeData(String.valueOf(String.valueOf(currentCharacter)), Tokens.EOF);
+            }
+
+        }
+
+    }
 
 }

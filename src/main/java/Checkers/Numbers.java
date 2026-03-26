@@ -1,9 +1,10 @@
 package Checkers;
 
+import Utils.LexemeData;
 import Core.CharacterExtractor;
 import Token.Tokens;
-import Utils.Conditions;
 import Utils.Helpers;
+import Utils.Conditions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,9 +17,10 @@ public class Numbers extends Checker{
         super(reader);
     }
 
-    public Tokens check(char currentCharacter) throws IOException {
+    public LexemeData check(char currentCharacter) throws IOException {
         String lexeme = getLexeme(currentCharacter);
-        return classifyTokens(lexeme);
+        Tokens token = classifyTokens(lexeme);
+        return new LexemeData(lexeme, token);
     }
 
     private Tokens classifyTokens(String lexeme) {
