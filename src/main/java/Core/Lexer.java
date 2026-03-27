@@ -48,7 +48,7 @@ public class Lexer {
         do {
             classify();
         } while (this.nextToken != Tokens.EOF);
-        System.out.println(tokenizedLexemes.toString());
+        Helpers.prettyPrint(tokenizedLexemes);
     }
 
     private void classify() throws IOException {
@@ -85,7 +85,6 @@ public class Lexer {
     private void classifyComment() throws IOException {
         this.lexemeData = comments.scan(this.nextChar);
         this.nextToken = this.lexemeData.getToken();
-        System.out.println(this.nextToken.getName());
         tokenizedLexemes.add(this.lexemeData);
         getCharacter();
     }
@@ -93,7 +92,6 @@ public class Lexer {
     private void classifyString() throws IOException {
         this.lexemeData = strings.scan(this.nextChar);
         this.nextToken = this.lexemeData.getToken();
-        System.out.println(this.nextToken.getName());
         tokenizedLexemes.add(this.lexemeData);
         getCharacter();
     }
@@ -101,7 +99,6 @@ public class Lexer {
     private void classifyLetter() throws IOException {
         this.lexemeData = ident.check(this.nextChar);
         this.nextToken = this.lexemeData.getToken();
-        System.out.println(this.nextToken.getName());
         tokenizedLexemes.add(this.lexemeData);
         getCharacter();
     }
@@ -109,7 +106,6 @@ public class Lexer {
     private void classifyDigits() throws IOException {
         this.lexemeData = numbers.check(this.nextChar);
         this.nextToken = this.lexemeData.getToken();
-        System.out.println(this.nextToken.getName());
         tokenizedLexemes.add(this.lexemeData);
         getCharacter();
     }
@@ -124,7 +120,6 @@ public class Lexer {
             this.nextToken = this.lexemeData.getToken();
         }
 
-        System.out.println(this.nextToken.getName());
         tokenizedLexemes.add(this.lexemeData);
         getCharacter();
     }

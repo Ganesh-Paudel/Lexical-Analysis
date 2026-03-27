@@ -1,13 +1,14 @@
 package Utils;
 
 import Token.Tokens;
-
 import java.util.ArrayList;
 
 public class Helpers {
 
     public static void prettyPrint(ArrayList<LexemeData> list) {
-
+        for (int i = 0; i < list.size(); i++) {
+            UI.printNicely(list.get(i).getToken().getName(), list.get(i).getValue());
+        }
     }
 
     public static String getString(ArrayList<Character> list) {
