@@ -1,1 +1,10 @@
-result = name * -2147483648 100.87 if ;
+// This is a Comments
+result = 10 - 5.55555055555;
+/* This
+is
+a multi
+line
+comment */
+'Character',
+"c"
+'c'

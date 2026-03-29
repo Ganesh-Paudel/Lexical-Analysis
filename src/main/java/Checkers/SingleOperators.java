@@ -44,8 +44,7 @@ public class SingleOperators extends Checker {
                 return new LexemeData(String.valueOf(currentCharacter), Tokens.SINGLE_QUOTE);
             }
             default -> {
-                System.out.println("Assigning EOF character " + String.valueOf(currentCharacter));
-                return new LexemeData(String.valueOf(String.valueOf(currentCharacter)), Tokens.EOF);
+                return new LexemeData(String.valueOf(String.valueOf(currentCharacter)), Tokens.UNKNOWN);
             }
 
         }

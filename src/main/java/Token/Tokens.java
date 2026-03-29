@@ -20,6 +20,8 @@ public enum Tokens {
     INV_STRING(34, "Invalid String (Unclosed)"),
     COMMENT(35, "Comments"),
     INV_COMMENT(36, "Invalid Comment"),
+    CHAR(37, "Character"),
+    UNKNOWN(-2, "Unknown Token"),
     EOF(-1, "EOF");
 
     private final int value;

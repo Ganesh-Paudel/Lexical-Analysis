@@ -7,35 +7,35 @@ import java.io.IOException;
 import java.util.ArrayList;
 import Token.Tokens;
 
+public class Strings extends Checker {
 
-public class Strings extends Checker{
-  
-  private char startingQuote;
+    private char startingQuote;
 
-  public Strings(CharacterExtractor reader){
-    super(reader);
-  }
-  
-
-  public LexemeData scan(char currentCharacter) throws IOException{
-    ArrayList<Character> lexemelist = new ArrayList<>();
-    lexemelist.add(currentCharacter);
-    int nextCharacter;
-
-    while(true){
-      nextCharacter = reader.peek();
-      if(nextCharacter == -1){
-        return new LexemeData(Helpers.getString(lexemelist), Tokens.INV_STRING);
-      }
-      lexemelist.add((char) reader.getNextCharacter());
-      if((char) nextCharacter == currentCharacter){
-        break;
-      }
+    public Strings(CharacterExtractor reader) {
+        super(reader);
     }
 
-    
+    public LexemeData scan(char currentCharacter) throws IOException {
+        ArrayList<Character> lexemelist = new ArrayList<>();
+        lexemelist.add(currentCharacter);
+        int nextCharacter;
 
-    return new LexemeData(Helpers.getString(lexemelist), Tokens.STRING);
-  }
+        while (true) {
+            nextCharacter = reader.peek();
+            if (nextCharacter == -1) {
+                return new LexemeData(Helpers.getString(lexemelist), Tokens.INV_STRING);
+            }
+            lexemelist.add((char) reader.getNextCharacter());
+            if ((char) nextCharacter == currentCharacter) {
+                break;
+            }
+        }
+
+        if (currentCharacter == '\'' && lexemelist.size() == 3) {
+            return new LexemeData(Helpers.getString(lexemelist), Tokens.CHAR);
+        }
+
+        return new LexemeData(Helpers.getString(lexemelist), Tokens.STRING);
+    }
 
 }
