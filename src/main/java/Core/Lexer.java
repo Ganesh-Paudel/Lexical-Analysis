@@ -1,149 +1,78 @@
 package Core;
 
-import Checkers.Identifier;
-import Checkers.Numbers;
-import Checkers.SingleOperators;
-import Checkers.Strings;
-import Checkers.Comments;
-import Token.Classes;
-import Token.Tokens;
-import Utils.Conditions;
-import Utils.LexemeData;
-import Utils.Helpers;
-
+import Checkers.*;
+import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import Utils.LexemeData;
+import Token.Tokens;
+import Utils.Helpers;
+import Token.Classes;
 
 public class Lexer {
+    private BaseReader source;
+    private Identifier ident;
+    private Numbers numbers;
+    private SingleOperators operators;
+    private Strings strings;
+    private Comments comments;
 
-    Identifier ident;
-    Numbers numbers;
-    SingleOperators operators;
-    Strings strings;
-    Comments comments;
-    ArrayList<LexemeData> tokenizedLexemes;
-
-    private ArrayList<Character> lexemeList;
-    private CharacterExtractor reader;
-    private char nextChar;
-    private Classes charClass;
-    private Tokens nextToken;
-    private LexemeData lexemeData;
+    private ArrayList<LexemeData> tokenizedLexemes = new ArrayList<>();
+    private Tokens currentToken;
 
     public Lexer(File file) throws IOException {
-        lexemeList = new ArrayList<>();
-        tokenizedLexemes = new ArrayList<>();
-        reader = new CharacterExtractor(file);
-        ident = new Identifier(reader);
-        numbers = new Numbers(reader);
-        operators = new SingleOperators(reader);
-        strings = new Strings(reader);
-        comments = new Comments(reader);
-        run();
+        CharacterExtractor reader = new CharacterExtractor(file);
+        this.source = new BaseReader(reader);
+        this.ident = new Identifier(reader);
+        this.numbers = new Numbers(reader);
+        this.operators = new SingleOperators(reader);
+        this.strings = new Strings(reader);
+        this.comments = new Comments(reader);
     }
 
-    private void run() throws IOException {
-        getCharacter();
+    public void tokenize() throws IOException {
         do {
-            classify();
-        } while (this.nextToken != Tokens.EOF);
+            nextLexeme();
+        } while (this.currentToken != Tokens.EOF);
         Helpers.prettyPrint(this.tokenizedLexemes);
     }
 
-    private void classify() throws IOException {
-        this.lexemeList.clear();
-        this.getRidOfSpaces();
-        if (this.charClass == Classes.EOF) {
-            this.nextToken = Tokens.EOF;
-            lexemeList.add('E');
-            lexemeList.add('O');
-            lexemeList.add('F');
-            this.lexemeData = new LexemeData(Helpers.getString(lexemeList), Tokens.EOF);
-            tokenizedLexemes.add(this.lexemeData);
+    private void nextLexeme() throws IOException {
+        source.getRidOfSpaces();
+
+        if (source.getCharClass() == Classes.EOF) {
+            recordToken(new LexemeData("EOF", Tokens.EOF));
             return;
         }
-        if (nextChar == '/' && (reader.peek() == '/' || reader.peek() == '*')) {
-            classifyComment();
+
+        char c = source.getNextChar();
+        LexemeData data;
+
+        if (c == '/' && (source.getExtractor().peek() == '/' || source.getExtractor().peek() == '*')) {
+            data = comments.scan(c);
         } else {
-            switch (this.charClass) {
-                case Classes.LETTER -> {
-                    classifyLetter();
-                }
-                case Classes.DIGIT -> {
-                    classifyDigits();
-                }
-                case Classes.QUOTES -> {
-                    classifyString();
-                }
-                case Classes.UNKNOWN -> {
-                    classifyUnknown();
-                }
-            }
+            data = switch (source.getCharClass()) {
+                case LETTER -> ident.check(c);
+                case DIGIT -> numbers.check(c);
+                case QUOTES -> strings.scan(c);
+                default -> handleUnknown(c);
+            };
         }
+
+        recordToken(data);
+        source.getCharacter();
     }
 
-    private void classifyComment() throws IOException {
-        classifyCurrentLexeme(comments.scan(this.nextChar));
-        getCharacter();
-    }
-
-    private void classifyString() throws IOException {
-        classifyCurrentLexeme(strings.scan(this.nextChar));
-        getCharacter();
-    }
-
-    private void classifyLetter() throws IOException {
-        classifyCurrentLexeme(ident.check(this.nextChar));
-        getCharacter();
-    }
-
-    private void classifyDigits() throws IOException {
-        classifyCurrentLexeme(numbers.check(this.nextChar));
-        getCharacter();
-    }
-
-    private void classifyUnknown() throws IOException {
-        LexemeData data = operators.check(this.nextChar);
+    private LexemeData handleUnknown(char c) throws IOException {
+        LexemeData data = operators.check(c);
         if (data.getToken() == Tokens.SUB_OP) {
-            data = numbers.check(this.nextChar);
+            return numbers.check(c);
         }
-        classifyCurrentLexeme(data);
-        getCharacter();
+        return data;
     }
 
-    private void classifyCurrentLexeme(LexemeData data) throws IOException {
-        this.lexemeData = data;
-        this.nextToken = data.getToken();
-        this.tokenizedLexemes.add(this.lexemeData);
+    private void recordToken(LexemeData data) {
+        this.currentToken = data.getToken();
+        this.tokenizedLexemes.add(data);
     }
-
-    private void getRidOfSpaces() throws IOException {
-        while (Conditions.isWhiteSpace(nextChar)) {
-            getCharacter();
-        }
-    }
-
-    private void getCharacter() throws IOException {
-        int next = reader.getNextCharacter();
-        if (next != -1) {
-            this.nextChar = (char) next;
-
-            if (Conditions.isDigit(this.nextChar)) {
-                this.charClass = Classes.DIGIT;
-            } else if (Conditions.isLetter(this.nextChar)) {
-                this.charClass = Classes.LETTER;
-            } else if (Conditions.isWhiteSpace(this.nextChar)) {
-                this.charClass = Classes.WHITESPACE;
-            } else if (Conditions.isQuote(this.nextChar)) {
-                this.charClass = Classes.QUOTES;
-            } else {
-                this.charClass = Classes.UNKNOWN;
-            }
-        } else {
-            this.nextChar = '\0';
-            charClass = Classes.EOF;
-        }
-    }
-
 }
