@@ -87,10 +87,13 @@ public class Numbers extends Checker {
             char nextCharacter = (char) nextChar;
             if (Conditions.isDigit(nextCharacter)) {
                 reader.getNextCharacter();
-                lexemeList.add(nextCharacter);
-                if (isFloat && decimalDigits < 5) {
+                if (!isFloat || decimalDigits < 5) {
                     lexemeList.add(nextCharacter);
-                    decimalDigits++;
+                    if (isFloat) {
+                        decimalDigits++;
+                    }
+                } else {
+                    break;
                 }
             } else if (nextCharacter == '.' && !isFloat) {
                 isFloat = true;

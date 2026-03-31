@@ -48,12 +48,21 @@ public class Lexer {
         do {
             classify();
         } while (this.nextToken != Tokens.EOF);
-        Helpers.prettyPrint(tokenizedLexemes);
+        Helpers.prettyPrint(this.tokenizedLexemes);
     }
 
     private void classify() throws IOException {
         this.lexemeList.clear();
         this.getRidOfSpaces();
+        if (this.charClass == Classes.EOF) {
+            this.nextToken = Tokens.EOF;
+            lexemeList.add('E');
+            lexemeList.add('O');
+            lexemeList.add('F');
+            this.lexemeData = new LexemeData(Helpers.getString(lexemeList), Tokens.EOF);
+            tokenizedLexemes.add(this.lexemeData);
+            return;
+        }
         if (nextChar == '/' && (reader.peek() == '/' || reader.peek() == '*')) {
             classifyComment();
         } else {
@@ -70,62 +79,47 @@ public class Lexer {
                 case Classes.UNKNOWN -> {
                     classifyUnknown();
                 }
-                case Classes.EOF -> {
-                    this.nextToken = Tokens.EOF;
-                    lexemeList.add('E');
-                    lexemeList.add('O');
-                    lexemeList.add('F');
-                    this.lexemeData = new LexemeData(Helpers.getString(lexemeList), Tokens.EOF);
-                    tokenizedLexemes.add(this.lexemeData);
-                }
             }
         }
     }
 
     private void classifyComment() throws IOException {
-        this.lexemeData = comments.scan(this.nextChar);
-        this.nextToken = this.lexemeData.getToken();
-        tokenizedLexemes.add(this.lexemeData);
+        classifyCurrentLexeme(comments.scan(this.nextChar));
         getCharacter();
     }
 
     private void classifyString() throws IOException {
-        this.lexemeData = strings.scan(this.nextChar);
-        this.nextToken = this.lexemeData.getToken();
-        tokenizedLexemes.add(this.lexemeData);
+        classifyCurrentLexeme(strings.scan(this.nextChar));
         getCharacter();
     }
 
     private void classifyLetter() throws IOException {
-        this.lexemeData = ident.check(this.nextChar);
-        this.nextToken = this.lexemeData.getToken();
-        tokenizedLexemes.add(this.lexemeData);
+        classifyCurrentLexeme(ident.check(this.nextChar));
         getCharacter();
     }
 
     private void classifyDigits() throws IOException {
-        this.lexemeData = numbers.check(this.nextChar);
-        this.nextToken = this.lexemeData.getToken();
-        tokenizedLexemes.add(this.lexemeData);
+        classifyCurrentLexeme(numbers.check(this.nextChar));
         getCharacter();
     }
 
     private void classifyUnknown() throws IOException {
-
-        this.lexemeData = operators.check(this.nextChar);
-        this.nextToken = this.lexemeData.getToken();
-
-        if (this.nextToken == Tokens.SUB_OP) {
-            this.lexemeData = numbers.check(this.nextChar);
-            this.nextToken = this.lexemeData.getToken();
+        LexemeData data = operators.check(this.nextChar);
+        if (data.getToken() == Tokens.SUB_OP) {
+            data = numbers.check(this.nextChar);
         }
-
-        tokenizedLexemes.add(this.lexemeData);
+        classifyCurrentLexeme(data);
         getCharacter();
     }
 
+    private void classifyCurrentLexeme(LexemeData data) throws IOException {
+        this.lexemeData = data;
+        this.nextToken = data.getToken();
+        this.tokenizedLexemes.add(this.lexemeData);
+    }
+
     private void getRidOfSpaces() throws IOException {
-        while (this.charClass != Classes.EOF && Conditions.isWhiteSpace(nextChar)) {
+        while (Conditions.isWhiteSpace(nextChar)) {
             getCharacter();
         }
     }
@@ -148,7 +142,7 @@ public class Lexer {
             }
         } else {
             this.nextChar = '\0';
-            this.charClass = Classes.EOF;
+            charClass = Classes.EOF;
         }
     }
 

@@ -13,7 +13,7 @@ public class Conditions {
     }
 
     public static boolean isWhiteSpace(char ch){
-        return ch == ' ' || ch == '\n' || ch == '\r';
+        return ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t';
     }
     
     public static boolean isQuote(char ch){
