@@ -38,7 +38,7 @@ public class Comments extends Checker {
             while (true) {
                 nextCharacter = reader.getNextCharacter();
                 if (nextCharacter == -1) {
-                    return new LexemeData(Helpers.getString(lexemeList), Tokens.INV_COMMENT);
+                    return new LexemeData(Helpers.getString(lexemeList), Tokens.INVALID);
                 }
                 if ((char) nextCharacter != '\n') {
                     lexemeList.add((char) nextCharacter);

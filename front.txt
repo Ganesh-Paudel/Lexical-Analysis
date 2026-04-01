@@ -5,6 +5,10 @@ is
 a multi
 line
 comment */
-'Character',
-"c"
+'Comment'
 'c'
+"Character"
+100000000000000000000000000000
+-1000000000000000000000000000
+45.6666666666
+/* This is a comment
