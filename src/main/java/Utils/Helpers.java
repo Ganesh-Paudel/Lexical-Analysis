@@ -47,7 +47,7 @@ public class Helpers {
 
     public static Tokens isInteger(String lexeme, boolean negative) {
         if (lexeme.length() > 10) {
-            return Tokens.INVALID;
+            return Tokens.INVALID_INT;
         } else if (lexeme.length() < 10) {
             return Tokens.INT;
         } else {
@@ -64,7 +64,7 @@ public class Helpers {
     private static Tokens compareNumber(String number, String maxValue) {
         for (int i = 0; i < number.length(); i++) {
             if (number.charAt(i) > maxValue.charAt(i)) {
-                return Tokens.INVALID;
+                return Tokens.INVALID_INT;
             }
         }
         return Tokens.INT;

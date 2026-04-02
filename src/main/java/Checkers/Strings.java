@@ -23,7 +23,7 @@ public class Strings extends Checker {
         while (true) {
             nextCharacter = reader.peek();
             if (nextCharacter == -1) {
-                return new LexemeData(Helpers.getString(lexemelist), Tokens.INVALID);
+                return new LexemeData(Helpers.getString(lexemelist), Tokens.INVALID_STRING);
             }
             lexemelist.add((char) reader.getNextCharacter());
             if ((char) nextCharacter == currentCharacter) {

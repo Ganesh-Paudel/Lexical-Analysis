@@ -19,7 +19,9 @@ public enum Tokens {
     COMMENT(35, "Comments"),
     CHAR(37, "Character"),
     UNKNOWN(-2, "Unknown Token"),
-    INVALID(-2, "***ERROR:: INVALID***"),
+    INVALID_INT(-2, "** Invalid Integer **"),
+    INVALID_STRING(-2, "** Invlid String"),
+    INVALID_COMMENT(-2, "** Unclosed Comment **"),
     EOF(-1, "EOF");
 
     private final int value;
