@@ -70,4 +70,14 @@ public class Helpers {
         return Tokens.INT;
     }
 
+    public static boolean containsLetters(String lexeme) {
+
+        for (int i = 0; i < lexeme.length(); i++) {
+            if (Conditions.isLetter(lexeme.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -46,6 +46,10 @@ public class Numbers extends Checker {
     }
 
     private Tokens classifyTokens(String lexeme) {
+        if (Helpers.containsLetters(lexeme)) {
+            return Tokens.INVALID_IDENTIFIER;
+        }
+
         if (Helpers.isFloat(lexeme)) {
             return Tokens.FLOAT;
         }
@@ -85,7 +89,7 @@ public class Numbers extends Checker {
                 break;
             }
             char nextCharacter = (char) nextChar;
-            if (Conditions.isDigit(nextCharacter)) {
+            if (Conditions.isDigit(nextCharacter) || Conditions.isLetter(nextCharacter)) {
                 reader.getNextCharacter();
                 if (!isFloat || decimalDigits < 5) {
                     lexemeList.add(nextCharacter);
