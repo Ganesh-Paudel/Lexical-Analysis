@@ -13,10 +13,10 @@ public class SingleOperators extends Checker {
     public LexemeData check(char currentCharacter) {
 
         switch (currentCharacter) {
-            case '(' -> {
+            case ')' -> {
                 return new LexemeData(String.valueOf(currentCharacter), Tokens.RIGHT_PAREN);
             }
-            case ')' -> {
+            case '(' -> {
                 return new LexemeData(String.valueOf(currentCharacter), Tokens.LEFT_PAREN);
             }
             case '+' -> {

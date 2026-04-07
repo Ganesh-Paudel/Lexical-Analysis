@@ -48,12 +48,15 @@ public class InfixToPostfix {
             }
         }
         while (!stack.isEmpty()) {
-            if (stack.peek().getToken() == Tokens.RIGHT_PAREN) {
-                System.out.println("Unbalanced parenthesis");
+            LexemeData remaining = stack.pop();
+
+            if (remaining.getToken() != Tokens.LEFT_PAREN && remaining.getToken() != Tokens.RIGHT_PAREN) {
+                postFixList.add(remaining);
+            } else {
+                System.out.println("Unbalanced Parenthessis detected");
             }
-            postFixList.add(stack.pop());
+
         }
-        System.out.println(stack);
         return postFixList;
     }
 }

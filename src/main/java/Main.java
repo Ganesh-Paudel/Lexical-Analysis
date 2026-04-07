@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Lexer.Core.Lexer;
 import Utils.Helpers;
 import Utils.UI;
-import parser.Tree.BinaryTreeVisualizer;
+// import parser.Tree.BinaryTreeVisualizer;
 import Utils.LexemeData;
 import parser.Parser;
 
