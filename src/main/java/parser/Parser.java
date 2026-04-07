@@ -45,17 +45,17 @@ public class Parser {
             ArrayList<LexemeData> rightSide = new ArrayList<>(statement.subList(2, statement.size()));
             ArrayList<LexemeData> postFix = InfixToPostfix.infixToPostfix(rightSide);
             root = new AssignmentNode(variableName, buildTree(postFix));
-            System.out.print("For Statement: " + Helpers.getStringFromLexemeData(statement));
         } else {
             ArrayList<LexemeData> postFix = InfixToPostfix.infixToPostfix(statement);
             root = buildTree(postFix);
-            System.out.print("For Statement: " + Helpers.getStringFromLexemeData(postFix));
         }
-        parseTrees.add(root);
+
+        System.out.print("For Statement: " + Helpers.getStringFromLexemeData(statement));
         System.out.println("Parse Tree for the above statement: ");
         BinaryTreeVisualizer.print(root);
         System.out.println("Result: " + root.evaluate());
 
+        parseTrees.add(root);
     }
 
     private TreeNode buildTree(ArrayList<LexemeData> postFixData) {
