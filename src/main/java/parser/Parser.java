@@ -1,5 +1,6 @@
 package parser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -12,11 +13,9 @@ import parser.Tree.*;
 
 public class Parser {
 
-    public Parser(ArrayList<LexemeData> tokenizedData) {
-        parseAll(tokenizedData);
-    }
+    private ArrayList<TreeNode> parseTrees = new ArrayList<>();
 
-    private void parseAll(ArrayList<LexemeData> tokenizedData) {
+    public ArrayList<TreeNode> parseAll(ArrayList<LexemeData> tokenizedData) {
         ArrayList<LexemeData> lineBuffer = new ArrayList<>();
 
         for (LexemeData token : tokenizedData) {
@@ -28,6 +27,8 @@ public class Parser {
                 lineBuffer.add(token);
             }
         }
+
+        return parseTrees;
     }
 
     private void processLine(ArrayList<LexemeData> statement) {
@@ -45,15 +46,14 @@ public class Parser {
             ArrayList<LexemeData> postFix = InfixToPostfix.infixToPostfix(rightSide);
             root = new AssignmentNode(variableName, buildTree(postFix));
             System.out.print("For Statement: " + Helpers.getStringFromLexemeData(statement));
-            System.out.println("Parse Tree for the above statement: ");
-            BinaryTreeVisualizer.print(root);
         } else {
             ArrayList<LexemeData> postFix = InfixToPostfix.infixToPostfix(statement);
             root = buildTree(postFix);
             System.out.print("For Statement: " + Helpers.getStringFromLexemeData(postFix));
-            System.out.println("Parse Tree for the above statement: ");
-            BinaryTreeVisualizer.print(root);
         }
+        parseTrees.add(root);
+        System.out.println("Parse Tree for the above statement: ");
+        BinaryTreeVisualizer.print(root);
         System.out.println("Result: " + root.evaluate());
 
     }

@@ -1,7 +1,12 @@
 package Utils;
 
 import Lexer.Token.Tokens;
+import parser.Tree.BinaryTreeVisualizer;
+import parser.Tree.TreeNode;
+
 import java.util.ArrayList;
+
+import com.sun.source.tree.Tree;
 
 public class Helpers {
 
@@ -21,6 +26,12 @@ public class Helpers {
         }
         string.append("\n");
         return string.toString();
+    }
+
+    public static void printParseTrees(ArrayList<TreeNode> trees) {
+        for (TreeNode tree : trees) {
+            BinaryTreeVisualizer.print(tree);
+        }
     }
 
     public static String getString(ArrayList<Character> list) {
