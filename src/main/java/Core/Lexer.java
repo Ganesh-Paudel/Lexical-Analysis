@@ -30,11 +30,11 @@ public class Lexer {
         this.comments = new Comments(reader);
     }
 
-    public void tokenize() throws IOException {
+    public ArrayList<LexemeData> tokenize() throws IOException {
         do {
             nextLexeme();
         } while (this.currentToken != Tokens.EOF);
-        Helpers.prettyPrint(this.tokenizedLexemes);
+        return this.tokenizedLexemes;
     }
 
     private void nextLexeme() throws IOException {

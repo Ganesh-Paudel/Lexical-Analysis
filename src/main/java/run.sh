@@ -17,12 +17,12 @@ rm sources.txt
 
 # 5. Check if compilation was successful ($? is the exit code)
 if [ $? -ne 0 ]; then
-  echo "Compilation failed."
-  exit 1
+    echo "Compilation failed."
+    exit 1
 fi
 
 echo "Compilation successful. Running Main..."
 echo "---------------------------------------"
 
 # 6. Run the Main class from the 'bin' folder
-java -cp bin main
+java -cp bin Main
