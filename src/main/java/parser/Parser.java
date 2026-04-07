@@ -21,7 +21,7 @@ public class Parser {
 
         for (LexemeData token : tokenizedData) {
 
-            if (token.getToken() == Tokens.SEMICOLON) {
+            if (token.getToken() == Tokens.SEMICOLON || token.getToken() == Tokens.EOF) {
                 processLine(lineBuffer);
                 lineBuffer.clear();
             } else {
@@ -44,15 +44,18 @@ public class Parser {
             ArrayList<LexemeData> rightSide = new ArrayList<>(statement.subList(2, statement.size()));
             ArrayList<LexemeData> postFix = InfixToPostfix.infixToPostfix(rightSide);
             root = new AssignmentNode(variableName, buildTree(postFix));
+            System.out.print("For Statement: " + Helpers.getStringFromLexemeData(statement));
+            System.out.println("Parse Tree for the above statement: ");
+            BinaryTreeVisualizer.print(root);
         } else {
             ArrayList<LexemeData> postFix = InfixToPostfix.infixToPostfix(statement);
             root = buildTree(postFix);
             System.out.print("For Statement: " + Helpers.getStringFromLexemeData(postFix));
+            System.out.println("Parse Tree for the above statement: ");
+            BinaryTreeVisualizer.print(root);
         }
         System.out.println("Result: " + root.evaluate());
 
-        System.out.println("Parse Tree for the above statement: ");
-        BinaryTreeVisualizer.printTree(root);
     }
 
     private TreeNode buildTree(ArrayList<LexemeData> postFixData) {
