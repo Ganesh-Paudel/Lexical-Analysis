@@ -32,25 +32,37 @@ Given a file, The program reads through the characters and defines a token for t
 
 This program currently just takes the following examples of inputs.
 ### Input
+<!-- ``` -->
+<!-- // This is a Comments -->
+<!-- result = 10 - 5.55555055555; -->
+<!-- /* This -->
+<!-- is -->
+<!-- a multi -->
+<!-- line -->
+<!-- comment */ -->
+<!-- 'Comment' -->
+<!-- 'c' -->
+<!-- "Character" -->
+<!-- 100000000000000000000000000000 -->
+<!-- -1000000000000000000000000000 -->
+<!-- 45.6666666666 -->
+<!-- /* This is a comment -->
+<!-- ``` -->
+<!---->
+
 ```
-// This is a Comments
-result = 10 - 5.55555055555;
-/* This
-is
-a multi
-line
-comment */
-'Comment'
-'c'
-"Character"
-100000000000000000000000000000
--1000000000000000000000000000
-45.6666666666
-/* This is a comment
+ 
+x = 10;
+y = 20;
+z = 30;
+
+a = ((x+y)*z);
+
+10 + 20 - 30 * (20 + 30);
+
 ```
 
 ### Output 
 
-![Output Image](./assets/output.png)
-
----
+<!-- ![Output Image](./assets/output.png) -->
+![Output](./assets/secondOutput.png)
