@@ -1,4 +1,4 @@
-package Core;
+package Lexer.Core;
 
 import java.io.*;
 

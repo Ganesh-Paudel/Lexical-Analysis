@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
 
-import Core.Lexer;
+import Lexer.Core.Lexer;
 import Utils.Helpers;
 import Utils.UI;
 import Utils.LexemeData;

@@ -1,13 +1,13 @@
-package Core;
+package Lexer.Core;
 
-import Checkers.*;
+import Lexer.Checkers.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import Utils.LexemeData;
-import Token.Tokens;
+import Lexer.Token.Tokens;
 import Utils.Helpers;
-import Token.Classes;
+import Lexer.Token.Classes;
 
 public class Lexer {
     private BaseReader source;

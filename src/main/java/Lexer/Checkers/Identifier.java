@@ -1,9 +1,8 @@
-package Checkers;
+package Lexer.Checkers;
 
 import Utils.LexemeData;
-import Core.CharacterExtractor;
-import Token.Tokens;
-import Utils.Helpers;
+import Lexer.Core.CharacterExtractor;
+import Lexer.Token.Tokens;
 import Utils.Conditions;
 
 import java.io.IOException;
@@ -13,13 +12,12 @@ import java.util.HashSet;
 
 import static Utils.Helpers.getString;
 
-public class Identifier extends Checker{
+public class Identifier extends Checker {
 
     private static final HashSet<String> keywords = new HashSet<>(Arrays.asList(
-            "if", "else", "for", "int", "float", "double", "do", "while", "String", "char"
-    ));
+            "if", "else", "for", "int", "float", "double", "do", "while", "String", "char"));
 
-    public Identifier(CharacterExtractor reader) throws IOException{
+    public Identifier(CharacterExtractor reader) throws IOException {
         super(reader);
     }
 
@@ -29,18 +27,17 @@ public class Identifier extends Checker{
         return new LexemeData(lexeme, token);
     }
 
-
     private String getLexeme(char currentCharacter) throws IOException {
         ArrayList<Character> lexemeList = new ArrayList<>();
         lexemeList.add(currentCharacter);
-        while(true){
+        while (true) {
             int nextCharacter = reader.peek();
-            if(nextCharacter == -1){
+            if (nextCharacter == -1) {
                 break;
             }
             char nextChar = (char) nextCharacter;
 
-            if(!(Conditions.isLetter(nextChar) || Conditions.isDigit(nextChar) || nextChar == '_')) {
+            if (!(Conditions.isLetter(nextChar) || Conditions.isDigit(nextChar) || nextChar == '_')) {
                 break;
             }
             lexemeList.add((char) reader.getNextCharacter());
@@ -49,13 +46,11 @@ public class Identifier extends Checker{
         return getString(lexemeList);
     }
 
-    private Tokens checkForKeyWords(String lexeme) throws IOException{
-        if(keywords.contains(lexeme)){
+    private Tokens checkForKeyWords(String lexeme) throws IOException {
+        if (keywords.contains(lexeme)) {
             return Tokens.KEYWORD;
         }
         return Tokens.IDENTIFIER;
     }
-
-
 
 }

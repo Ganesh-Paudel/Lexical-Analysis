@@ -1,4 +1,4 @@
-package Token;
+package Lexer.Token;
 
 public enum Classes {
 

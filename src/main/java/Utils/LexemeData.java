@@ -1,6 +1,6 @@
 package Utils;
 
-import Token.Tokens;
+import Lexer.Token.Tokens;
 
 public class LexemeData {
     private String value;

@@ -1,7 +1,7 @@
-package Checkers;
+package Lexer.Checkers;
 
-import Core.CharacterExtractor;
-import Token.Tokens;
+import Lexer.Core.CharacterExtractor;
+import Lexer.Token.Tokens;
 import Utils.LexemeData;
 
 public class SingleOperators extends Checker {

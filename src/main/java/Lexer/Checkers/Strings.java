@@ -1,11 +1,11 @@
-package Checkers;
+package Lexer.Checkers;
 
-import Core.CharacterExtractor;
+import Lexer.Core.CharacterExtractor;
 import Utils.LexemeData;
 import Utils.Helpers;
 import java.io.IOException;
 import java.util.ArrayList;
-import Token.Tokens;
+import Lexer.Token.Tokens;
 
 public class Strings extends Checker {
 

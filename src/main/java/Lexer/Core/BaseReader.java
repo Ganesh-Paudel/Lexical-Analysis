@@ -1,7 +1,7 @@
-package Core;
+package Lexer.Core;
 
 import Utils.Conditions;
-import Token.Classes;
+import Lexer.Token.Classes;
 
 import java.io.IOException;
 

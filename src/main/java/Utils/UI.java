@@ -1,7 +1,5 @@
 package Utils;
 
-import java.util.ArrayList;
-
 public class UI {
     //
     // public static void printHeader(String... values) {

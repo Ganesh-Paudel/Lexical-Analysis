@@ -1,4 +1,4 @@
-package Token;
+package Lexer.Token;
 
 public enum Tokens {
     INT(10, "integer"),

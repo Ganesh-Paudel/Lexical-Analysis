@@ -1,6 +1,6 @@
 package Utils;
 
-import Token.Tokens;
+import Lexer.Token.Tokens;
 import java.util.ArrayList;
 
 public class Helpers {
