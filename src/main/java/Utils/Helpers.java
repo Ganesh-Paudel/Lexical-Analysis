@@ -11,6 +11,18 @@ public class Helpers {
         }
     }
 
+    public static String getStringFromLexemeData(ArrayList<LexemeData> list) {
+
+        StringBuilder string = new StringBuilder();
+
+        for (LexemeData data : list) {
+            string.append(data.getValue());
+            string.append(" ");
+        }
+        string.append("\n");
+        return string.toString();
+    }
+
     public static String getString(ArrayList<Character> list) {
         StringBuilder sb = new StringBuilder();
         for (Character c : list) {

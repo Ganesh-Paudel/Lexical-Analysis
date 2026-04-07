@@ -7,7 +7,13 @@ public class NumberNode extends TreeNode {
         this.value = value;
     }
 
+    @Override
     public double evaluate() {
         return value;
+    }
+
+    @Override
+    public String getDisplayValue() {
+        return String.valueOf(this.value);
     }
 }

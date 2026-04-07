@@ -11,10 +11,17 @@ public class AssignmentNode extends TreeNode {
         this.expression = expression;
     }
 
+    @Override
     public double evaluate() {
         double val = expression.evaluate();
         Memory.set(varName, val);
         return val;
 
     }
+
+    @Override
+    public String getDisplayValue() {
+        return this.varName;
+    }
+
 }

@@ -2,7 +2,6 @@ package parser.Tree;
 
 public class OperationNode extends TreeNode {
     private String op;
-    private TreeNode left, right;
 
     public OperationNode(String op, TreeNode left, TreeNode right) {
         this.op = op;
@@ -10,6 +9,7 @@ public class OperationNode extends TreeNode {
         this.right = right;
     }
 
+    @Override
     public double evaluate() {
         switch (op) {
             case "+":
@@ -23,5 +23,10 @@ public class OperationNode extends TreeNode {
             default:
                 return 0;
         }
+    }
+
+    @Override
+    public String getDisplayValue() {
+        return this.op;
     }
 }

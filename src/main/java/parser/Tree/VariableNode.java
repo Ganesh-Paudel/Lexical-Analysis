@@ -9,7 +9,13 @@ public class VariableNode extends TreeNode {
         this.name = name;
     }
 
+    @Override
     public double evaluate() {
         return Memory.get(name);
+    }
+
+    @Override
+    public String getDisplayValue() {
+        return this.name;
     }
 }

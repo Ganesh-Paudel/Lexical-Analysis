@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 
 import Lexer.Token.Tokens;
+import Utils.Helpers;
 import Utils.LexemeData;
 import parser.Utils.InfixToPostfix;
 import parser.Tree.*;
@@ -46,14 +47,15 @@ public class Parser {
         } else {
             ArrayList<LexemeData> postFix = InfixToPostfix.infixToPostfix(statement);
             root = buildTree(postFix);
+            System.out.print("For Statement: " + Helpers.getStringFromLexemeData(postFix));
         }
-
         System.out.println("Result: " + root.evaluate());
+
+        System.out.println("Parse Tree for the above statement: ");
+        BinaryTreeVisualizer.printTree(root);
     }
 
     private TreeNode buildTree(ArrayList<LexemeData> postFixData) {
-
-        System.out.println(postFixData);
 
         Deque<TreeNode> stack = new ArrayDeque<>();
 
