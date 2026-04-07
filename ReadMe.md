@@ -28,6 +28,18 @@ Given a file, The program reads through the characters and defines a token for t
 | if , else, for ,int ,float ,double ,do ,while ,char ,String |
 | --- |
 
+
+### Parsing
+
+
+Given a tokenized list of lexemes, Now the parser can parse infix equations and convert it to postfix. 
+Also, it uses memory to remember the variable's value from the tokens or after evaluating expression.
+
+
+Each statement should b e separated by semi colons for the evaluation. if not it will treat everything as single statement until semicolon or eof. 
+
+Each statement get's evaluated and has it's own parse tree.  
+
 ## Sample 
 
 This program currently just takes the following examples of inputs.
