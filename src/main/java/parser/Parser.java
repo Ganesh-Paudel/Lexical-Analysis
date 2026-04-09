@@ -10,10 +10,39 @@ import Utils.LexemeData;
 import parser.Utils.InfixToPostfix;
 import parser.Tree.*;
 
+/**
+ * Main parser that converts a token stream into abstract syntax trees (ASTs).
+ * 
+ * This class performs the parsing phase of compilation, converting the sequential
+ * list of tokens produced by the lexer into binary expression trees. For each
+ * statement (terminated by semicolon or EOF), it:
+ * <ol>
+ *   <li>Detects assignment statements (identifier = expression)</li>
+ *   <li>Converts infix expressions to postfix notation (Shunting Yard algorithm)</li>
+ *   <li>Builds a binary tree from the postfix expression</li>
+ *   <li>Evaluates the tree and displays results with visualization</li>
+ * </ol>
+ * 
+ * @author Ganesh
+ * @version 1.0
+ * @see InfixToPostfix
+ * @see TreeNode
+ * @see Memory
+ */
 public class Parser {
 
+  /** Collection of parse trees built from all statements */
   private ArrayList<TreeNode> parseTrees = new ArrayList<>();
 
+  /**
+   * Parses all tokens and returns the collection of parse trees.
+   * 
+   * Splits the token stream at SEMICOLON and EOF markers, processing each
+   * statement independently. Handles both expressions and assignments.
+   * 
+   * @param tokenizedData The ArrayList of LexemeData tokens from the lexer
+   * @return An ArrayList of TreeNode roots representing parsed expressions
+   */
   public ArrayList<TreeNode> parseAll(ArrayList<LexemeData> tokenizedData) {
     ArrayList<LexemeData> lineBuffer = new ArrayList<>();
 
@@ -30,6 +59,15 @@ public class Parser {
     return parseTrees;
   }
 
+  /**
+   * Processes a single statement (assignment or expression).
+   * 
+   * Detects if the statement is an assignment (identifier = expression) and
+   * creates an AssignmentNode, otherwise creates a general expression tree.
+   * Displays the statement, parse tree, and result to the console.
+   * 
+   * @param statement The ArrayList of tokens representing one statement
+   */
   private void processLine(ArrayList<LexemeData> statement) {
     if (statement.isEmpty()) {
       return;
@@ -57,6 +95,17 @@ public class Parser {
     parseTrees.add(root);
   }
 
+  /**
+   * Builds a binary expression tree from a postfix (RPN) expression.
+   * 
+   * Uses a stack-based algorithm: operands are pushed onto the stack, and when
+   * an operator is encountered, it pops two operands, creates an OperationNode,
+   * and pushes the result back. The final stack contains one element: the root
+   * of the expression tree.
+   * 
+   * @param postFixData The ArrayList of tokens in postfix notation
+   * @return The root TreeNode of the built expression tree
+   */
   private TreeNode buildTree(ArrayList<LexemeData> postFixData) {
 
     Deque<TreeNode> stack = new ArrayDeque<>();

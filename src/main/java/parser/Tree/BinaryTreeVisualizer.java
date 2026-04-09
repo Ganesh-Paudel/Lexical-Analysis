@@ -1,8 +1,76 @@
 package parser.Tree;
 
-// import java.util.*;
-
+/**
+ * Utility for visualizing binary expression trees using ASCII art.
+ * 
+ * This class provides methods to pretty-print binary trees to the console using
+ * prefix notation with connected lines. The output resembles a file system tree
+ * structure, making it easy to visualize the parse tree hierarchy.
+ * 
+ * Example output:
+ * <pre>
+ * ├── +
+ * │   ├── 3
+ * │   └── 4
+ * </pre>
+ * 
+ * @author Ganesh
+ * @version 1.0
+ * @see TreeNode
+ */
 public class BinaryTreeVisualizer {
+ /**
+     * Prints the given tree to the console using ASCII art visualization.
+     * 
+     * Entry point that starts the recursive tree printing process. Displays
+     * the tree with branch connectors and indentation to show parent-child
+     * relationships.
+     * 
+     * Example output for "2 + 3":
+     * <pre>
+     * ├── +
+     * │   ├── 2
+     * │   └── 3
+     * </pre>
+     * 
+     * @param root The root TreeNode of the tree to visualize
+     */
+    public static void print(TreeNode root) {
+        print(root, "", true);
+    }
+
+    /**
+     * Recursively prints a tree node and its subtrees with ASCII art connectors.
+     * 
+     * Uses prefix strings to build indentation and connection lines:
+     * <ul>
+     *   <li>├── for non-last children with siblings</li>
+     *   <li>└── for the last child (no right sibling)</li>
+     *   <li>│   for continuation lines under parent</li>
+     *   <li>    for empty space under last child</li>
+     * </ul>
+     * 
+     * @param node The current node to print (null nodes are skipped)
+     * @param prefix The prefix string (indentation and connectors) for this line
+     * @param isTail Whether this is the rightmost/last child of its parent
+     */
+    private static void print(TreeNode node, String prefix, boolean isTail) {
+        if (node == null)
+            return;
+
+        System.out.println(prefix + (isTail ? "└── " : "├── ") + node.getDisplayValue());
+
+        String newPrefix = prefix + (isTail ? "    " : "│   ");
+
+        if (node.left != null || node.right != null) {
+            if (node.right != null) {
+                print(node.right, newPrefix, node.left == null);
+            }
+            if (node.left != null) {
+                print(node.left, newPrefix, true);
+            }
+        }
+    }
     //
     // public static void printTree(TreeNode root) {
     // int maxLevel = maxLevel(root);
@@ -81,25 +149,5 @@ public class BinaryTreeVisualizer {
     // return true;
     // }
 
-    public static void print(TreeNode root) {
-        print(root, "", true);
-    }
-
-    private static void print(TreeNode node, String prefix, boolean isTail) {
-        if (node == null)
-            return;
-
-        System.out.println(prefix + (isTail ? "└── " : "├── ") + node.getDisplayValue());
-
-        String newPrefix = prefix + (isTail ? "    " : "│   ");
-
-        if (node.left != null || node.right != null) {
-            if (node.right != null) {
-                print(node.right, newPrefix, node.left == null);
-            }
-            if (node.left != null) {
-                print(node.left, newPrefix, true);
-            }
-        }
-    }
+   
 }
